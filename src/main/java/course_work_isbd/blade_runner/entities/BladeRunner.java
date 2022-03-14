@@ -2,13 +2,17 @@ package course_work_isbd.blade_runner.entities;
 
 import com.sun.istack.NotNull;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity(name = "BLADE_RUNNER")
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "BLADE_RUNNER")
 public class BladeRunner {
@@ -37,4 +41,6 @@ public class BladeRunner {
      */
     @OneToMany(mappedBy = "bladeRunner")
     private Set<ReplicantSearch> replicantSearches;
+
+
 }

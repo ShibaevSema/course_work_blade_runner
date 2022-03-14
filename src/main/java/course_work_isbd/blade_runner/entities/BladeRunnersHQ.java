@@ -7,6 +7,8 @@ import java.util.Set;
 
 @Entity(name = "BLADE_RUNNERS_HQ")
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "BLADE_RUNNERS_HQ")
 public class BladeRunnersHQ {

@@ -2,13 +2,17 @@ package course_work_isbd.blade_runner.entities;
 
 import com.sun.istack.NotNull;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity(name = "REPLICANT_MODEL")
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "REPLICANT_MODEL")
 public class ReplicantModel {

@@ -1,12 +1,16 @@
 package course_work_isbd.blade_runner.entities;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity(name = "REPLICANT_SEARCH")
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "REPLICANT_SEARCH")
 public class ReplicantSearch {
@@ -25,4 +29,6 @@ public class ReplicantSearch {
 
     @Column(name = "RESULT")
     private boolean result;
+
+
 }

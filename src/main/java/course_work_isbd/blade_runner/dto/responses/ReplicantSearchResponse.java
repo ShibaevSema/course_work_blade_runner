@@ -10,4 +10,16 @@ public class ReplicantSearchResponse {
     private String position;
     private String bladeRunnerHQ;
     private boolean status;
+
+    public void setEntity_id(long entity_id) {
+        this.entity_id = entity_id;
+    }
+
+    public void setReplicant(String replicant) {
+        this.replicant = replicant;
+    }
+
+    public void setBladeRunner(String bladeRunner) {
+        this.bladeRunner = bladeRunner;
+    }
 }

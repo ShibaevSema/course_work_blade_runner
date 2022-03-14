@@ -9,6 +9,8 @@ import java.util.Set;
 
 @Entity(name = "PROFESSION")
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "PROFESSION")
 public class Profession {

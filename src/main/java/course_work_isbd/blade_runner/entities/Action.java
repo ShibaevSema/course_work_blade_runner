@@ -10,6 +10,8 @@ import java.util.Set;
 
 @Entity(name = "ACTION")
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "ACTION")
 public class Action {

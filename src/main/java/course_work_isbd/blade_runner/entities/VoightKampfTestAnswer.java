@@ -9,6 +9,8 @@ import lombok.*;
 
 @Entity(name = "VOIGHT_KAMPF_TEST_ANSWERS")
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "VOIGHT_KAMPF_TEST_ANSWERS")
 public class VoightKampfTestAnswer {

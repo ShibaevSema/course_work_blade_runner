@@ -1,13 +1,16 @@
 package course_work_isbd.blade_runner.entities;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity(name = "IMPACT_ON_SOCIETY")
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "IMPACT_ON_SOCIETY")
 public class ImpactOnSociety {
@@ -16,13 +19,12 @@ public class ImpactOnSociety {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @Column(name = "ACTION_ID")
+    @JoinColumn(name = "ACTION_ID")
     private Action action;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "ENTITY_ID")
+    @JoinColumn(name = "ENTITY_ID")
     private Human human;
-
 
 
 }

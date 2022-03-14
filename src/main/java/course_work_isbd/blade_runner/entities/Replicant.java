@@ -1,7 +1,9 @@
 package course_work_isbd.blade_runner.entities;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import java.util.Set;
 
 @Entity(name = "REPLICANT")
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "REPLICANT")
 public class Replicant {
@@ -18,7 +22,7 @@ public class Replicant {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ENTITY_ID")
-    private Human human_id;
+    private Human entity_id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "REPLICANT_MODEL_ID")
@@ -34,4 +38,6 @@ public class Replicant {
      */
     @OneToMany(mappedBy = "replicant")
     private Set<ReplicantSearch> replicantSearches;
+
+
 }

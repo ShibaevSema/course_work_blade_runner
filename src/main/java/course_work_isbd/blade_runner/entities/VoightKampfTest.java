@@ -1,16 +1,19 @@
 package course_work_isbd.blade_runner.entities;
 
 import com.sun.istack.NotNull;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-
-import lombok.*;
-
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity(name = "VOIGHT_KAMPF_TEST")
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "VOIGHT_KAMPF_TEST")
 public class VoightKampfTest {
@@ -19,7 +22,7 @@ public class VoightKampfTest {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @Column(name = "entity_id")
+    @JoinColumn(name = "entity_id")
     private Human human;
 
     @Column(name = "eye_movement")

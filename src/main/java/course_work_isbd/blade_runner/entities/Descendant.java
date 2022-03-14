@@ -1,12 +1,16 @@
 package course_work_isbd.blade_runner.entities;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity(name = "DESCENDANTS")
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "DESCENDANTS")
 public class Descendant {

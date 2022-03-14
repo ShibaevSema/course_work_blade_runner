@@ -8,6 +8,8 @@ import java.util.Set;
 
 @Entity(name = "POSITION")
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "POSITION")
 public class Position {
@@ -23,4 +25,6 @@ public class Position {
 
     @OneToMany(mappedBy = "position", fetch = FetchType.EAGER)
     private Set<BladeRunner> bladeRunner;
+
+
 }

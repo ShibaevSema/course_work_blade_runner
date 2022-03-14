@@ -3,6 +3,7 @@ package course_work_isbd.blade_runner.controller;
 import course_work_isbd.blade_runner.dto.request.*;
 import course_work_isbd.blade_runner.services.EntityService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/main")
 @RequiredArgsConstructor
 public class EntityController {
-
+    @Autowired
     private final EntityService entityService;
 
     @PostMapping("/register/entity")

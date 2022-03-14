@@ -3,7 +3,9 @@ package course_work_isbd.blade_runner.entities;
 
 import com.sun.istack.NotNull;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -11,6 +13,8 @@ import java.util.Set;
 
 @Entity(name = "ENTITY")
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "ENTITY")
 public class Human {
@@ -79,7 +83,7 @@ public class Human {
      * Для таблицы Replicant
      */
 
-    @OneToOne(mappedBy = "human_id")
+    @OneToOne(mappedBy = "entity_id")
     private Replicant replicant;
 
     /*
@@ -88,6 +92,7 @@ public class Human {
 
     @OneToMany(mappedBy = "human", fetch = FetchType.EAGER)
     private Set<VoightKampfTest> voightKampfTests;
+
 
 }
 

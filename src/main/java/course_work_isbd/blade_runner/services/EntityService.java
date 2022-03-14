@@ -64,17 +64,17 @@ public class EntityService {
     }
 
     public List<EntityResponse> getPeople() {
-        List<Human> people = humanRepository.findAllByHumanIsTrue();
+        List<Human> people = humanRepository.findAllByIsHumanIsTrue();
         return convertHumanDto(people);
     }
 
     public List<EntityResponse> getReplicants() {
-        List<Human> replicants = humanRepository.findAllByHumanIsFalse();
+        List<Human> replicants = humanRepository.findAllByIsHumanIsTrue();
         return convertHumanDto(replicants);
     }
 
     public List<EntityResponse> getUnknownEntities() {
-        List<Human> unknownEntities = humanRepository.findAllByHumanIsNull();
+        List<Human> unknownEntities = humanRepository.findAllByIsHumanIsNull();
         return convertHumanDto(unknownEntities);
     }
 
@@ -126,7 +126,6 @@ public class EntityService {
         return relatives;
     }
 
-
     public List<VoightKampfTestResponse> findEntityVKTest(long id) {
         List<VoightKampfTest> list = vkTestRepository.findAllByHuman_Id(id);
         List<VoightKampfTestResponse> vktResponse = new ArrayList<>();
@@ -137,7 +136,8 @@ public class EntityService {
             voightKampfTestResponse.setEyeMovement(vkt.isEyeMovement());
             voightKampfTestResponse.setBrainReaction(vkt.isBrainReaction());
             voightKampfTestResponse.setLocalDate(vkt.getLocalDate());
-            voightKampfTestResponse.setResult(vkt.isResult());
+            //считаем результат теста
+            voightKampfTestResponse.setResult(vkTestRepository.calculateVKTresult(vkt.getId()));
             vktResponse.add(voightKampfTestResponse);
         }
         return vktResponse;
