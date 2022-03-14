@@ -33,7 +33,7 @@ public class EntityService {
         human.setFullName(entity.getFullName());
         human.setBirthDate(entity.getBirthDate());
         human.setDeathDate(entity.getDeathDate());
-        human.setHuman(entity.getIsHuman());
+        human.setIsHuman(entity.getIsHuman());
         human.setHumanLocation(locationRepository.findById(entity.getIdLocation())
                 .orElseThrow(() -> new ResourceNotFoundException("Error: Location is Not Found"))); // тут подправить
         human.setSex(entity.getSex());
@@ -69,7 +69,7 @@ public class EntityService {
     }
 
     public List<EntityResponse> getReplicants() {
-        List<Human> replicants = humanRepository.findAllByIsHumanIsTrue();
+        List<Human> replicants = humanRepository.findAllByIsHumanIsFalse();
         return convertHumanDto(replicants);
     }
 
@@ -92,7 +92,7 @@ public class EntityService {
         List<DescendantResponse> relatives = new ArrayList<>();
         DescendantResponse descendantResponse;
 
-        if (human.isSex()) {
+        if (human.getSex()) {
             //ищем всех жен и детей
             List<Descendant> fathers = descendantRepository.findAllByFather_Id(id);
             for (Descendant descendant : fathers) {
@@ -133,8 +133,8 @@ public class EntityService {
         for (VoightKampfTest vkt : list) {
             voightKampfTestResponse.setId(vkt.getId());
             voightKampfTestResponse.setEntity_id(id);
-            voightKampfTestResponse.setEyeMovement(vkt.isEyeMovement());
-            voightKampfTestResponse.setBrainReaction(vkt.isBrainReaction());
+            voightKampfTestResponse.setEyeMovement(vkt.getEyeMovement());
+            voightKampfTestResponse.setBrainReaction(vkt.getBrainReaction());
             voightKampfTestResponse.setLocalDate(vkt.getLocalDate());
             //считаем результат теста
             voightKampfTestResponse.setResult(vkTestRepository.calculateVKTresult(vkt.getId()));
@@ -156,15 +156,20 @@ public class EntityService {
 
     private List<EntityResponse> convertHumanDto(List<Human> list) {
         List<EntityResponse> entityResponsesList = new ArrayList<>();
+        Long location_id;
         for (Human h : list) {
+            if (h.getHumanLocation() == null)
+                location_id = null;
+            else
+                location_id = h.getHumanLocation().getId().longValue();
             entityResponsesList.add(new EntityResponse(
                     h.getId().longValue(),
                     h.getFullName(),
                     h.getBirthDate(),
                     h.getDeathDate(),
-                    h.isHuman(),
-                    h.getHumanLocation().getId().longValue(),
-                    h.isSex()
+                    h.getIsHuman(),
+                    location_id,
+                    h.getSex()
             ));
         }
         return entityResponsesList;

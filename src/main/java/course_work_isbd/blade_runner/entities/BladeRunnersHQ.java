@@ -9,6 +9,7 @@ import java.util.Set;
 @Data
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @Table(name = "BLADE_RUNNERS_HQ")
 public class BladeRunnersHQ {

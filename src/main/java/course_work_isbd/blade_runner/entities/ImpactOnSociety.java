@@ -1,9 +1,6 @@
 package course_work_isbd.blade_runner.entities;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,6 +8,7 @@ import javax.persistence.*;
 @Data
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @Table(name = "IMPACT_ON_SOCIETY")
 public class ImpactOnSociety {

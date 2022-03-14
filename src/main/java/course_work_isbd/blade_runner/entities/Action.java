@@ -12,6 +12,7 @@ import java.util.Set;
 @Data
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @Table(name = "ACTION")
 public class Action {
@@ -27,7 +28,7 @@ public class Action {
     private String description;
 
     @Column(name = "benefitOrHarm")
-    private boolean benefitOrHarm;
+    private Boolean benefitOrHarm;
 
     /*
      * Для таблицы Impact_on_society - связь человека/репликанта и его действий

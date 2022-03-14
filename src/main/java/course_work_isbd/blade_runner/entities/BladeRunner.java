@@ -1,10 +1,7 @@
 package course_work_isbd.blade_runner.entities;
 
 import com.sun.istack.NotNull;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,6 +10,7 @@ import java.util.Set;
 @Data
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @Table(name = "BLADE_RUNNER")
 public class BladeRunner {
@@ -34,7 +32,7 @@ public class BladeRunner {
 
     @NotNull
     @Column(name = "FREE")
-    private boolean free;
+    private Boolean free;
 
     /*
      * табличка ReplicantSearch

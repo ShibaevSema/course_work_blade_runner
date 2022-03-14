@@ -74,7 +74,7 @@ public class BladeRunnerService {
         replicantSearch.setId(task.getId());
         replicantSearch.setReplicant(replicant);
         replicantSearch.setBladeRunner(bladeRunner);
-        replicantSearch.setResult(task.isResult());
+        replicantSearch.setResult(task.getResult());
         replicantSearchRepository.save(replicantSearch);
         return replicantSearch.getId();
     }
@@ -87,7 +87,7 @@ public class BladeRunnerService {
         replicantSearch.setId(task.getId());
         replicantSearch.setReplicant(replicant);
         replicantSearch.setBladeRunner(bladeRunner);
-        replicantSearch.setResult(task.isResult());
+        replicantSearch.setResult(task.getResult());
         replicantSearchRepository.delete(replicantSearch);
 
         return replicantSearch.getId();

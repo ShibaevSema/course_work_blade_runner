@@ -4,8 +4,9 @@ import lombok.Data;
 
 @Data
 public class TaskUpdateRequest {
-    private long id;
-    private long entity_id;
-    private long blade_runner_id;
-    private boolean result;
+    private Long id;
+    private Long entity_id;
+    private Long blade_runner_id;
+    private Boolean result;
+
 }

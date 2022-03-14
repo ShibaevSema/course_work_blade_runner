@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class ErrorMessagerResponse {
-        private int statusCode;
+        private Integer statusCode;
         private Date timestamp;
         private String message;
         private String description;

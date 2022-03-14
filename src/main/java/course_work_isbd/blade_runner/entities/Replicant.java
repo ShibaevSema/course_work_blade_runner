@@ -1,9 +1,6 @@
 package course_work_isbd.blade_runner.entities;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
@@ -13,6 +10,7 @@ import java.util.Set;
 @Data
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @Table(name = "REPLICANT")
 public class Replicant {

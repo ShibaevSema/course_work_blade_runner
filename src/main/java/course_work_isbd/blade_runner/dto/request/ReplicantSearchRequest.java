@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class ReplicantSearchRequest {
-    private long entity_id;
-    private long blade_runner_id;
+    private Long entity_id;
+    private Long blade_runner_id;
 }

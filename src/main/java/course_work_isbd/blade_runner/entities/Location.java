@@ -12,6 +12,7 @@ import java.util.Set;
 @Data
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @Table(name = "LOCATION")
 public class Location {

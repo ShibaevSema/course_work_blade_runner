@@ -7,11 +7,11 @@ import java.time.LocalDate;
 @Data
 public class VoightKampfTestResponse {
 
-    private long id;
-    private long entity_id;
-    private boolean eyeMovement;
-    private boolean brainReaction;
+    private Long id;
+    private Long entity_id;
+    private Boolean eyeMovement;
+    private Boolean brainReaction;
     private LocalDate localDate;
-    private boolean result;
+    private Boolean result;
 
 }

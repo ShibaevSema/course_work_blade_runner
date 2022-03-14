@@ -2,10 +2,7 @@ package course_work_isbd.blade_runner.entities;
 
 
 import com.sun.istack.NotNull;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,6 +12,7 @@ import java.util.Set;
 @Data
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @Table(name = "ENTITY")
 public class Human {
@@ -34,7 +32,7 @@ public class Human {
     private LocalDate deathDate;
 
     @Column(name = "is_human")
-    private boolean isHuman;
+    private Boolean isHuman;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
@@ -42,7 +40,7 @@ public class Human {
 
     @NotNull
     @Column(name = "sex")
-    private boolean sex;
+    private Boolean sex;
 
     /*
      * Для таблицы Impact_on_society - связь человека/репликанта и его действий

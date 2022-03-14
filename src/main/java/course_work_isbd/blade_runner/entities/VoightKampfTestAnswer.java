@@ -11,6 +11,7 @@ import lombok.*;
 @Data
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @Table(name = "VOIGHT_KAMPF_TEST_ANSWERS")
 public class VoightKampfTestAnswer {
@@ -31,6 +32,6 @@ public class VoightKampfTestAnswer {
 
     @NotNull
     @Column(name = "result")
-    private boolean result;
+    private Boolean result;
 
 }

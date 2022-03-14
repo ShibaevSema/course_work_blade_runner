@@ -11,6 +11,7 @@ import java.util.Set;
 @Data
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @Table(name = "PROFESSION")
 public class Profession {

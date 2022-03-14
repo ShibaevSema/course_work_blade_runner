@@ -1,10 +1,7 @@
 package course_work_isbd.blade_runner.entities;
 
 import com.sun.istack.NotNull;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,6 +11,7 @@ import java.util.Set;
 @Data
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @Table(name = "VOIGHT_KAMPF_TEST")
 public class VoightKampfTest {
@@ -26,17 +24,17 @@ public class VoightKampfTest {
     private Human human;
 
     @Column(name = "eye_movement")
-    private boolean eyeMovement;
+    private Boolean eyeMovement;
 
     @Column(name = "brain_reaction")
-    private boolean brainReaction;
+    private Boolean brainReaction;
 
     @Column(name = "completionDate")
     private LocalDate localDate;
 
     @NotNull
     @Column(name = "result")
-    private boolean result;
+    private Boolean result;
 
     @OneToMany(mappedBy = "voightKampfTest")
     private Set<VoightKampfTestAnswer> voightKampfTestAnswers;

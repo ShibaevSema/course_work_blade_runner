@@ -3,7 +3,7 @@ import lombok.Data;
 
 @Data
 public class ProfessionResponse {
-    private long id;
+    private Long id;
     private String name;
     private String description;
 }

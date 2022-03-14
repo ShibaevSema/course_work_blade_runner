@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Embeddable
 @Getter
 @Setter
+@ToString
 @EqualsAndHashCode
 public class VktaID implements Serializable {
 
