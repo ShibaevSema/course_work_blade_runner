@@ -5,8 +5,10 @@
     <ng-template pTemplate="caption">
       <span class="p-input-icon-right ml-auto">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="replicantTable.filterGlobal($event.target.value, 'contains')"
-                           placeholder="Поиск по таблице"/>
+                    <label>
+<input pInputText type="text" (input)="replicantTable.filterGlobal($event.target.value, 'contains')"
+       placeholder="Поиск по таблице"/>
+</label>
       </span>
     </ng-template>
     <ng-template pTemplate="header">
