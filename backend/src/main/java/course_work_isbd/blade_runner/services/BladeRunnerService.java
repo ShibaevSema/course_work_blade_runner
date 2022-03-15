@@ -78,6 +78,7 @@ public class BladeRunnerService {
         replicantSearch.setResult(task.getResult());
         replicantSearchRepository.save(replicantSearch);
         return replicantSearch.getId();
+
     }
 
 
@@ -104,10 +105,21 @@ public class BladeRunnerService {
             replicant.setReplicantModel(null);
             replicant.setLifespan(100);
             replicantRepository.save(replicant);
+            Long IdNearestHQ;
             //ищем ближайший штаб
-            Long IdNearestHQ = bladeRunnerHQRepository.findNearestHQ(human.getHumanLocation().getId());
+
+            if (human.getHumanLocation() == null)
+                IdNearestHQ = bladeRunnerHQRepository.reserveHQ();
+            else
+                IdNearestHQ = bladeRunnerHQRepository.findNearestHQ(Math.toIntExact(human.getHumanLocation().getId()));
+
+
             //ищем бегущего по лезвию
-            Long IdBladeRunner = bladeRunnerRepository.findBladeRunner(IdNearestHQ);
+            Long IdBladeRunner = bladeRunnerRepository.findBladeRunner(Math.toIntExact(IdNearestHQ));
+
+            if (IdBladeRunner == null) {
+                IdBladeRunner = bladeRunnerRepository.findAnyBladeRunner(Math.toIntExact(IdNearestHQ));
+            }
 
             BladeRunner bladeRunner = bladeRunnerRepository.findById(IdBladeRunner).orElse(new BladeRunner());
             ReplicantSearch replicantSearch = new ReplicantSearch();
@@ -117,7 +129,36 @@ public class BladeRunnerService {
 
             replicantSearchRepository.save(replicantSearch);
 
-            return replicantSearch.getId();
+        } else {
+            Replicant replicant = replicantRepository.findByEntity_id(id);
+            if (replicantSearchRepository.findByReplicant(replicant) == null) {
+                Human human = humanRepository.findById(id).orElse(new Human());
+                human.setIsHuman(null);
+                humanRepository.save(human);
+
+                //ищем ближайший штаб
+                Long IdNearestHQ;
+                if (human.getHumanLocation() == null)
+                    IdNearestHQ = bladeRunnerHQRepository.reserveHQ();
+                else
+                    IdNearestHQ = bladeRunnerHQRepository.findNearestHQ(Math.toIntExact(human.getHumanLocation().getId()));
+
+                //ищем бегущего по лезвию
+                Long IdBladeRunner = bladeRunnerRepository.findBladeRunner(Math.toIntExact(IdNearestHQ));
+
+                if (IdBladeRunner == null) {
+                    IdBladeRunner = bladeRunnerRepository.findAnyBladeRunner(Math.toIntExact(IdNearestHQ));
+                }
+
+                BladeRunner bladeRunner = bladeRunnerRepository.findById(IdBladeRunner).orElse(new BladeRunner());
+                ReplicantSearch replicantSearch = new ReplicantSearch();
+                replicantSearch.setBladeRunner(bladeRunner);
+                replicantSearch.setReplicant(replicant);
+                replicantSearch.setResult(null);
+                replicantSearchRepository.save(replicantSearch);
+                return replicantSearch.getId();
+
+            }
         }
         return 0;
     }

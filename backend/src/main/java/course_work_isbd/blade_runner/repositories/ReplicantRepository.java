@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface ReplicantRepository extends JpaRepository<Replicant, Long> {
-
-    @Query(value = "select r from REPLICANT r where r.entity_id = : e_id")
+    @Query(value = "select * from REPLICANT r where r.entity_id = :e_id", nativeQuery = true)
     Replicant findByEntity_id(@Param(value = "e_id") long id);
 }

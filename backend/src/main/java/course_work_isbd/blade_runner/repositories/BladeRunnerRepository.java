@@ -10,6 +10,8 @@ public interface BladeRunnerRepository extends JpaRepository<BladeRunner, Long> 
     BladeRunner findByHuman_Id(long id);
 
     @Query(value = "select find_blade_runner(:id)", nativeQuery = true)
-    Long findBladeRunner(@Param(value = "id") Long id);
+    Long findBladeRunner(@Param(value = "id") int id);
 
+    @Query(value = "select * from BLADE_RUNNER where HQ_ID =:id limit 1", nativeQuery = true)
+    Long findAnyBladeRunner(@Param(value = "id") int id);
 }

@@ -1,6 +1,7 @@
 package course_work_isbd.blade_runner.services;
 
 import course_work_isbd.blade_runner.dto.request.*;
+import course_work_isbd.blade_runner.dto.responses.ActionResponse;
 import course_work_isbd.blade_runner.dto.responses.EntityResponse;
 import course_work_isbd.blade_runner.dto.responses.ProfessionResponse;
 import course_work_isbd.blade_runner.dto.responses.VoightKampfTestResponse;
@@ -21,6 +22,8 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class EntityService {
+    private final ActionRepository actionRepository;
+    private final ImpactOnSocietyRepository impactOnSocietyRepository;
     private final HumanRepository humanRepository;
     private final DescendantRepository descendantRepository;
     private final LocationRepository locationRepository;
@@ -59,7 +62,7 @@ public class EntityService {
                 .orElseThrow(() -> new ResourceNotFoundException("Error: Location is Not Found")));
         descendantRepository.save(descendant);
 
-        if (mother.getIsHuman() || father.getIsHuman() || mother.getIsHuman() == null || father.getIsHuman() == null) {
+        if (!mother.getIsHuman() || !father.getIsHuman() || mother.getIsHuman() == null || father.getIsHuman() == null) {
             bladeRunnerService.findChild(child.getChildId());
         }
 
@@ -194,6 +197,38 @@ public class EntityService {
         workerRepository.save(worker);
         return worker.getId();
     }
+
+    public Long addAction(ActionRequest actionRequest) {
+        Action action = new Action();
+        action.setName(actionRequest.getName());
+        action.setDescription(actionRequest.getDescription());
+        action.setBenefitOrHarm(actionRequest.getBenefit_or_harm());
+        actionRepository.save(action);
+
+        Human human = humanRepository.findById(actionRequest.getEntity_id()).orElse(new Human());
+        ImpactOnSociety impactOnSociety = new ImpactOnSociety();
+        impactOnSociety.setAction(action);
+        impactOnSociety.setHuman(human);
+        impactOnSocietyRepository.save(impactOnSociety);
+
+        return action.getId();
+    }
+
+    public List<ActionResponse> getAllActions(Long id) {
+        List<ImpactOnSociety> impacts = impactOnSocietyRepository.findAllByHuman_Id(id);
+        List<ActionResponse> actions = new ArrayList<>();
+        for (ImpactOnSociety impact : impacts) {
+            ActionResponse actionResponse = new ActionResponse();
+            Action action = actionRepository.findById(impact.getAction().getId()).orElse(new Action());
+            actionResponse.setName(action.getName());
+            actionResponse.setDescription(action.getDescription());
+            actionResponse.setBenefit_or_harm(action.getBenefitOrHarm());
+
+            actions.add(actionResponse);
+        }
+        return actions;
+    }
+
 
 }
 

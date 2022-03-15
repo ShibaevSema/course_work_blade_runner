@@ -7,5 +7,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface BladeRunnerHQRepository extends JpaRepository<BladeRunnersHQ, Long> {
     @Query(value = "select nearest_hq(:id)", nativeQuery = true)
-    Long findNearestHQ(@Param(value = "id") Long id);
+    Long findNearestHQ(@Param(value = "id") int id);
+
+    @Query(value = "select id from blade_runners_hq limit 1", nativeQuery = true)
+    Long reserveHQ();
 }

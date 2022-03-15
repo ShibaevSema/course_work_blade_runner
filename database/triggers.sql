@@ -95,14 +95,14 @@ l_id
 (
 select id
 from blade_runner
-where hq_id = 2
+where hq_id = hq
   and free = true
     limit 1) is not null
                 then
                     n_br_id = (
 select id
 from blade_runner
-where hq_id = 2
+where hq_id = hq
   and free = true
     limit 1);
 
@@ -117,6 +117,11 @@ else
                     n_br_id = (select find_blade_runner(hq));
                     replicant
 = (select max(id) from replicant);
+
+                    if n_br_id is null then
+                        n_br_id = (select * from BLADE_RUNNER where HQ_ID = hq limit 1);
+end if;
+
 insert into replicant_search(blade_runner_id, replicant_id,
                              result)
 values (n_br_id, replicant, null);
