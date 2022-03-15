@@ -1,1 +1,2 @@
 rootProject.name = 'blade_runner'
+include 'backend'
