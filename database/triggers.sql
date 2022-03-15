@@ -95,14 +95,19 @@ l_id
 (
 select id
 from blade_runner
-where hq_id = hq
-  and free = false
-    limit 1) is not null then
+where hq_id = 2
+  and free = true
+    limit 1) is not null
+                then
                     n_br_id = (
 select id
 from blade_runner
-where free = false
+where hq_id = 2
+  and free = true
     limit 1);
+
+UPDATE blade_runner SET free = false where id = n_br_id;
+
 replicant
 = (select max(id) from replicant);
 insert into replicant_search(blade_runner_id, replicant_id,

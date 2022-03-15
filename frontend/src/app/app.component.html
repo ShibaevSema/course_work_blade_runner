@@ -1,0 +1,7 @@
+<div *ngIf="loaderService.isLoading | async" class="loader-container">
+  <p-progressSpinner style="position: relative; top:45%; left:45%; width: 10%; height: 10%"></p-progressSpinner>
+</div>
+<p-confirmPopup></p-confirmPopup>
+<router-outlet></router-outlet>
+<p-toast position="bottom-right"></p-toast>
+

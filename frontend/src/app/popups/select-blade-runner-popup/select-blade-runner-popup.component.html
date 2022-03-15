@@ -1,0 +1,41 @@
+<p-panel header="Все бегущие по лезвию">
+  <p-table #replicantTable [value]="allBladeRunners" selectionMode="single" [(selection)]="selectedBladeRunner"
+           (onRowSelect)="onRowSelect($event)" responsiveLayout="scroll"
+           [globalFilterFields]="['id','humanoid.fullName','position','hq.location']">
+    <ng-template pTemplate="caption">
+      <span class="p-input-icon-right ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="replicantTable.filterGlobal($event.target.value, 'contains')"
+                           placeholder="Поиск по таблице"/>
+      </span>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="id">Id
+          <p-sortIcon field="id"></p-sortIcon>
+        </th>
+        <th pSortableColumn="humanoid.fullName">Полное имя
+          <p-sortIcon field="humanoid.fullName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="position">Должность
+          <p-sortIcon field="position"></p-sortIcon>
+        </th>
+        <th pSortableColumn="hq.description">HQ
+          <p-sortIcon field="hq.description"></p-sortIcon>
+        </th>
+        <th pSortableColumn="hq.location">Местоположение
+          <p-sortIcon field="hq.location"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-bladeRunner>
+      <tr [pSelectableRow]="bladeRunner">
+        <td>{{bladeRunner.id}}</td>
+        <td>{{bladeRunner.humanoid.fullName}}</td>
+        <td>{{bladeRunner.position}}</td>
+        <td>{{bladeRunner.hq.description}}</td>
+        <td>{{bladeRunner.hq.location}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-panel>

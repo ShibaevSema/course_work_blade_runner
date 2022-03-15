@@ -1,0 +1,17 @@
+<p-card header="Создать новое задание">
+  <div>
+  <span class="p-float-label p-input-icon-right">
+    <input id="replicant-input" type="text" [(ngModel)]="replicantName" [disabled]="true" pInputText>
+    <label for="replicant-input">Выбранный реплекант</label>
+    <i class="pi pi-user-plus" pTooltip="Выбрать реплеканта..." (click)="selectReplicant()"></i>
+  </span>
+  </div>
+  <div>
+  <span class="p-float-label p-input-icon-right" style="margin-top: 2em">
+    <input id="bladerunner-input" type="text" class="p-inputtext-lg" [(ngModel)]="bladeRunnerName" [disabled]="true" pInputText>
+    <label for="bladerunner-input">Выбранный бегущий по лезвию</label>
+    <i class="pi pi-user-plus" pTooltip="Выбрать бегущего по лезвию..." (click)="selectBladeRunner()"></i>
+  </span>
+  </div>
+  <button pButton label="Подтвердить" icon="pi pi-check" (click)="confirm()" style="margin-top: 2em"></button>
+</p-card>

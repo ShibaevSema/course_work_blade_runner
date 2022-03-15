@@ -1,0 +1,47 @@
+<p-tabView>
+  <p-tabPanel header="Подробная информация">
+    <div class="flex flex-wrap">
+      <div>
+        <p-panel header="Профессия">
+          <h1>{{profession.name}}</h1>
+          <p>{{profession.description}}</p>
+        </p-panel>
+      </div>
+      <div style="margin-left: 2em; width: 30%">
+        <p-panel header="Личная информация">
+          <b>Дата рождения: </b><p>{{humanoid.birthDate}}</p>
+          <b>Дата смерти:</b><p>{{humanoid.deathDate==null?"На данный момент жив":humanoid.deathDate}}</p>
+          <b>Пол: </b><p>{{humanoid.sex?"Мужчина":"Женщина"}}</p>
+          <b>Является репликантом: </b><p>{{humanoid.isHuman?"Нет":"Да"}}</p>
+        </p-panel>
+      </div>
+      <div *ngIf="!humanoid.isHuman" style="margin-left: 2em; width: 30%">
+        <p-panel header="Информация о модели">
+          <b>Название модели: </b><p>{{replicantModel.name}}</p>
+          <b>Описание: </b><p>{{replicantModel.description}}</p>
+          <b>Производитель: </b><p>{{replicantModel.corporationName}}</p>
+        </p-panel>
+      </div>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Родственники">
+    <p-accordion>
+      <p-accordionTab *ngFor="let descendant of descendants" header="{{descendant.fullName}}">
+        <b>Дата рождения: </b><p>{{descendant.birthDate}}</p>
+        <b>Дата смерти:</b><p>{{descendant.deathDate==null?"На данный момент жив":descendant.deathDate}}</p>
+        <b>Пол: </b><p>{{descendant.sex?"Мужчина":"Женщина"}}</p>
+        <b>Является репликантом: </b><p>{{descendant.isHuman?"Нет":"Да"}}</p>
+      </p-accordionTab>
+    </p-accordion>
+  </p-tabPanel>
+  <p-tabPanel header="Тесты Войта-Кампфа">
+    <p-accordion>
+      <p-accordionTab *ngFor="let test of voitKampfTests" header="Тест под номером {{test.id}}">
+        <b>Дата выполнения: </b><p>{{test.completionDate}}</p>
+        <b>Реакция мозга:</b><p>{{test.brainReaction}}</p>
+        <b>Движения глаз: </b><p>{{test.eyeMovement}}</p>
+        <b>Результат: </b><p>{{test.result}}</p>
+      </p-accordionTab>
+    </p-accordion>
+  </p-tabPanel>
+</p-tabView>

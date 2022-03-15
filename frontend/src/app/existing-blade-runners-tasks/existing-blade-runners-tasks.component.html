@@ -1,0 +1,30 @@
+<div *ngIf="bladeRunnerTasks.length>0">
+  <div class="flex flex-wrap">
+    <p-card *ngFor="let task of bladeRunnerTasks" [header]="'['+task.replicant.id +'] ' + task.replicant.fullName"
+            [style]="{'width': '27em', 'height': '20em', 'margin': '1em'}">
+      <ul *ngIf="task!=undefined">
+        <li><a><b>Бегущий по лезвию:</b> "{{task.bladeRunner.humanoid.fullName}}"</a></li>
+        <li><a><b>Должность:</b> "{{task.bladeRunner.position}}"</a></li>
+        <li><a><b>Штаб:</b> "{{task.bladeRunner.hq.description}}"</a></li>
+        <li><a><b>Местоположение:</b>"{{task.replicant.location}}"</a></li>
+        <li><a><b>Статус:</b>"{{task.result == null ? "В процессе" : task.result ? "Успешно" : "Провалено"}}"</a></li>
+      </ul>
+      <ng-template pTemplate="footer">
+        <div *ngIf="task.result==null">
+          <button pButton label="Выполнено" icon="pi pi-check" (click)="success(task)"></button>
+          <button pButton label="Провалено" icon="pi pi-times" styleClass="p-button-secondary"
+                  [style]="{'margin-left': '.5em'}" (click)="fail(task)"></button>
+        </div>
+        <div *ngIf="task.result!=null">
+          <button pButton label="Удалить" icon="pi pi-times" styleClass="p-button-secondary"
+                  [style]="{'margin-left': '.5em'}" (click)="delete(task)"></button>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+</div>
+<div *ngIf="bladeRunnerTasks.length==0">
+  <p-panel header="Внимание!">
+    <p>На данный момент нет никаких активных заданий. Создайте новое или обновите страницу.</p>
+  </p-panel>
+</div>

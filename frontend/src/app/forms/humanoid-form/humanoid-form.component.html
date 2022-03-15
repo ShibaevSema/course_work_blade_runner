@@ -1,0 +1,29 @@
+<div class="flex flex-wrap">
+  <div>
+    <div style="margin-top: 1.2em">
+      <p>Полное имя</p>
+      <input type="text" pInputText [(ngModel)]="fullName">
+    </div>
+    <div style="margin-top: 1.2em">
+      <p>Дата рождения</p>
+      <p-calendar [(ngModel)]="birthDate" inputId="birth-date"></p-calendar>
+    </div>
+    <div style="margin-top: 1.2em">
+      <p>Дата смерти</p>
+      <p-calendar [(ngModel)]="deathDate" inputId="death-date"></p-calendar>
+    </div>
+    <div style="margin-top: 1.2em">
+      <p>Пол</p>
+      <p-checkbox name="Пол" value="Мужской" [(ngModel)]="sex" [binary]="true" inputId="sex"></p-checkbox>
+      <label style="margin-left: 1.2em" for="sex">{{sex?"Мужской":"Женский"}}</label>
+    </div>
+    <div style="margin-top: 1.2em">
+      <p>Человек или реплекант?</p>
+      <p-dropdown [options]="isHuman" [(ngModel)]="selectedHumanoidState"></p-dropdown>
+    </div>
+  </div>
+  <div style="margin-left: 1.2em">
+
+  </div>
+</div>
+

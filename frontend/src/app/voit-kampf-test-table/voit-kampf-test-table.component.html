@@ -1,0 +1,21 @@
+<p-panel [header]="headerValue">
+  <p-table [value]="voitKampfTests" selectionMode="single" [(selection)]="selectedTest"
+           (onRowSelect)="onRowSelect($event)" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="completionDate">Дата выполнения <p-sortIcon field="completionDate"></p-sortIcon></th>
+        <th pSortableColumn="brainReaction">Реакция мозга <p-sortIcon field="brainReaction"></p-sortIcon></th>
+        <th pSortableColumn="eyeMovement">Движение глаз <p-sortIcon field="eyeMovement"></p-sortIcon></th>
+        <th pSortableColumn="result">Результат <p-sortIcon field="result"></p-sortIcon></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-test>
+      <tr [pSelectableRow]="test">
+        <td>{{test.completionDate}}</td>
+        <td>{{test.brainReaction}}</td>
+        <td>{{test.eyeMovement}}</td>
+        <td>{{test.result}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-panel>

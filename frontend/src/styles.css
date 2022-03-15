@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+
+@font-face{
+  font-family: "SF-Pro-Light";
+  src: local("SF-Pro-Light"), url("./assets/SF-Pro-Display-Light.otf");
+}
+
+body{
+  font-family: "SF-Pro-Light", serif;
+  color: #ffffffde;
+  margin: 1px;
+  background-color: #30303f
+}
+
+.loader-container{
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  opacity: 0.6;
+  z-index: 99;
+}
+

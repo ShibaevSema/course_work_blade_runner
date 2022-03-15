@@ -1,0 +1,24 @@
+<p-panel [header]="headerValue">
+  <ng-template pTemplate="icons">
+        <span class="p-input-icon-right" [style]="{'right':'0'}">
+          <button pButton type="button" (click)="createNewPerson()" label="Добавить нового человека"
+                  icon="pi pi-user-plus"></button>
+        </span>
+  </ng-template>
+  <p-table [value]="selectedCut" selectionMode="single" [(selection)]="selectedHumanoid"
+           (onRowSelect)="onRowSelect($event)" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of cols">
+          {{col.header}}
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-humanoid>
+      <tr [pSelectableRow]="humanoid">
+        <td *ngFor="let col of cols">
+          {{humanoid[col.field]}}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-panel>

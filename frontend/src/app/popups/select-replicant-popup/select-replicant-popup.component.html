@@ -1,0 +1,45 @@
+<p-panel header="Все реплеканты">
+  <p-table #replicantTable [value]="allReplicants" selectionMode="single" [(selection)]="selectedReplicant"
+           (onRowSelect)="onRowSelect($event)" responsiveLayout="scroll"
+           [globalFilterFields]="['id','fullName','sex','location']">
+    <ng-template pTemplate="caption">
+      <span class="p-input-icon-right ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="replicantTable.filterGlobal($event.target.value, 'contains')"
+                           placeholder="Поиск по таблице"/>
+      </span>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="id">Id
+          <p-sortIcon field="id"></p-sortIcon>
+        </th>
+        <th pSortableColumn="fullName">Полное имя
+          <p-sortIcon field="fullName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="sex">Пол
+          <p-sortIcon field="sex"></p-sortIcon>
+        </th>
+        <th pSortableColumn="birthDate">Дата рождения
+          <p-sortIcon field="birthDate"></p-sortIcon>
+        </th>
+        <th pSortableColumn="deathDate">Дата смерти
+          <p-sortIcon field="deathDate"></p-sortIcon>
+        </th>
+        <th pSortableColumn="location">Местоположение
+          <p-sortIcon field="location"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-replicant>
+      <tr [pSelectableRow]="replicant">
+        <td>{{replicant.id}}</td>
+        <td>{{replicant.fullName}}</td>
+        <td>{{replicant.sex}}</td>
+        <td>{{replicant.birthDate}}</td>
+        <td>{{replicant.deathDate}}</td>
+        <td>{{replicant.location}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-panel>
