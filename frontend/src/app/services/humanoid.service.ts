@@ -8,7 +8,7 @@ import {ReplicantData} from '../samples/replicant-data';
 export class HumanoidService {
 
   public allHumanoids: Humanoid[];
-  public descendatns: Humanoid[];
+  public descendants: Humanoid[];
 
   constructor() { }
 
@@ -34,12 +34,12 @@ export class HumanoidService {
 
   getDescendants(): Humanoid[]{
     //TODO: запросом доставать всех родственников по заданному ID(добавить параметр)
-    this.descendatns = [{
+    this.descendants = [{
       id: 3, fullName:"Peotr Markov", sex:"Male", birthDate:"20.11.2001", deathDate:"20.11.2022",location:"[31.12;31.16]", isHuman: true
     },{
       id: 4, fullName:"Evgeniy Tsopa", sex:"Male", birthDate:"20.11.2001", deathDate:"20.11.2022",location:"[31.12;31.16]", isHuman: true
     }];
-    return this.descendatns;
+    return this.descendants;
   }
 
   getReplicantModel(id: number): ReplicantData{
