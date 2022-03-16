@@ -1,12 +1,7 @@
 package course_work_isbd.blade_runner.services;
 
 import course_work_isbd.blade_runner.dto.request.*;
-import course_work_isbd.blade_runner.dto.responses.ActionResponse;
-import course_work_isbd.blade_runner.dto.responses.EntityResponse;
-import course_work_isbd.blade_runner.dto.responses.ProfessionResponse;
-import course_work_isbd.blade_runner.dto.responses.VoightKampfTestResponse;
-import course_work_isbd.blade_runner.dto.responses.relatives.DescendantResponse;
-import course_work_isbd.blade_runner.dto.responses.relatives.Family;
+import course_work_isbd.blade_runner.dto.responses.*;
 import course_work_isbd.blade_runner.entities.*;
 import course_work_isbd.blade_runner.exceptions.ResourceNotFoundException;
 import course_work_isbd.blade_runner.repositories.*;
@@ -14,8 +9,10 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 @Slf4j
@@ -31,6 +28,7 @@ public class EntityService {
     private final ProfessionRepository professionRepository;
     private final VKTestRepository vkTestRepository;
     private final BladeRunnerService bladeRunnerService;
+    private final ReplicantModelRepository replicantModelRepository;
 
     public long createEntity(HumanRequest entity) {
         Human human = new Human();
@@ -79,9 +77,9 @@ public class EntityService {
         return convertHumanDto(people);
     }
 
-    public List<EntityResponse> getReplicants() {
+    public List<ReplicantResponse> getReplicants() {
         List<Human> replicants = humanRepository.findAllByIsHumanIsFalse();
-        return convertHumanDto(replicants);
+        return convertHumanDtoToReplicant(replicants);
     }
 
     public List<EntityResponse> getUnknownEntities() {
@@ -103,43 +101,25 @@ public class EntityService {
         return professionResponse;
     }
 
-    public List<DescendantResponse> getEntityRelatives(long id) {
-        Human human = humanRepository.findById(id).orElse(new Human());
-        List<DescendantResponse> relatives = new ArrayList<>();
-        DescendantResponse descendantResponse;
-
-        if (human.getSex()) {
-            //ищем всех жен и детей
-            List<Descendant> fathers = descendantRepository.findAllByFather_Id(id);
-            for (Descendant descendant : fathers) {
-                descendantResponse = findRelativeById(descendant.getMother().getId(), Family.WIFE);
-                relatives.add(descendantResponse);
-
-                descendantResponse = findRelativeById(descendant.getChild().getId(), Family.CHILD);
-                relatives.add(descendantResponse);
-            }
-        } else {
-            //ищем всех мужей и детей
-            List<Descendant> fathers = descendantRepository.findAllByMother_Id(id);
-            for (Descendant descendant : fathers) {
-                descendantResponse = findRelativeById(descendant.getFather().getId(), Family.HUSBAND);
-                relatives.add(descendantResponse);
-
-                descendantResponse = findRelativeById(descendant.getChild().getId(), Family.CHILD);
-                relatives.add(descendantResponse);
-            }
-        }
-
-        //ищем родителей
-        List<Descendant> parents = descendantRepository.findAllByChild_Id(id);
-        for (Descendant descendant : parents) {
-            descendantResponse = findRelativeById(descendant.getMother().getId(), Family.MOTHER);
-            relatives.add(descendantResponse);
-
-            descendantResponse = findRelativeById(descendant.getFather().getId(), Family.FATHER);
-            relatives.add(descendantResponse);
-        }
+    public HashSet<EntityResponse> getEntityRelatives(long id) {
+        HashSet<EntityResponse> relatives = new HashSet<>();
+        List<Descendant> fathers = descendantRepository.findAllByFather_Id(id);
+        List<Descendant> mothers = descendantRepository.findAllByMother_Id(id);
+        List<Descendant> child = descendantRepository.findAllByChild_Id(id);
+        relatives.addAll(findAllRelatives(fathers));
+        relatives.addAll(findAllRelatives(mothers));
+        relatives.addAll(findAllRelatives(child));
         return relatives;
+    }
+
+    private List<EntityResponse> findAllRelatives(List<Descendant> rels) {
+        List<Human> list = new ArrayList<>();
+        for (Descendant descendant : rels) {
+            list.add(descendant.getFather());
+            list.add(descendant.getMother());
+            list.add(descendant.getChild());
+        }
+        return convertHumanDto(list);
     }
 
     public List<VoightKampfTestResponse> findEntityVKTest(long id) {
@@ -159,16 +139,6 @@ public class EntityService {
         return vktResponse;
     }
 
-
-    private DescendantResponse findRelativeById(long id, Family type) {
-        DescendantResponse descendantResponse = new DescendantResponse();
-        Human entity = humanRepository.findById(id).orElse(new Human());
-        EntityResponse entityResponse = convertHumanDto(Collections.singletonList(entity)).get(0);
-
-        descendantResponse.setEntity(entityResponse);
-        descendantResponse.setFamily(type);
-        return descendantResponse;
-    }
 
     private List<EntityResponse> convertHumanDto(List<Human> list) {
         List<EntityResponse> entityResponsesList = new ArrayList<>();
@@ -198,6 +168,59 @@ public class EntityService {
             ));
         }
         return entityResponsesList;
+
+    }
+
+    private List<ReplicantResponse> convertHumanDtoToReplicant(List<Human> list) {
+        List<ReplicantResponse> replicantResponseList = new ArrayList<>();
+        Long location_id = null;
+        String location = null;
+
+        for (Human h : list) {
+            ReplicantResponse replicantResponse = new ReplicantResponse();
+
+            if (h.getHumanLocation() == null)
+                location_id = null;
+            else
+                location_id = h.getHumanLocation().getId().longValue();
+
+            if (location_id != null) {
+                Location loc = locationRepository.findById(location_id)
+                        .orElseThrow(() -> new ResourceNotFoundException("Error: Location is Not Found"));
+
+                StringBuilder stringBuilder = new StringBuilder();
+                location = stringBuilder.append("[").append(loc.getLatitude()).append(",").append(loc.getLongitude()).append("]").toString();
+            }
+
+            replicantResponse.setEntityId(h.getId());
+            replicantResponse.setFullName(h.getFullName());
+            replicantResponse.setBirthDate(h.getBirthDate());
+            replicantResponse.setDeathDate(h.getDeathDate());
+            replicantResponse.setIsHuman(h.getIsHuman());
+            replicantResponse.setLocation(location);
+            replicantResponse.setSex(h.getSex());
+            Integer model_id;
+
+            if (h.getBirthDate() != null) {
+                model_id = replicantModelRepository.define_replicant_model(Date.valueOf(h.getBirthDate()));
+            } else
+                model_id = null;
+
+            String model_rep = null;
+            String company = null;
+
+            if (model_id != null) {
+                ReplicantModel replicantModel = replicantModelRepository.findById(Long.valueOf(model_id)).orElse(new ReplicantModel());
+                model_rep = replicantModel.getName();
+                company = replicantModel.getCorporation().getName();
+            }
+
+            replicantResponse.setModel(model_rep);
+            replicantResponse.setCorporation(company);
+
+            replicantResponseList.add(replicantResponse);
+        }
+        return replicantResponseList;
     }
 
     public Long addProfession(ProfessionRequest profession) {

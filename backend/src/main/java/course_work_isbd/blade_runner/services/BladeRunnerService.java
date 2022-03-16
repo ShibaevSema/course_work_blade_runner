@@ -4,8 +4,11 @@ import course_work_isbd.blade_runner.dto.request.BladeRunnerRequest;
 import course_work_isbd.blade_runner.dto.request.ReplicantSearchRequest;
 import course_work_isbd.blade_runner.dto.request.TaskUpdateRequest;
 import course_work_isbd.blade_runner.dto.responses.BladeRunnerResponse;
+import course_work_isbd.blade_runner.dto.responses.EntityResponse;
+import course_work_isbd.blade_runner.dto.responses.HQResponse;
 import course_work_isbd.blade_runner.dto.responses.ReplicantSearchResponse;
 import course_work_isbd.blade_runner.entities.*;
+import course_work_isbd.blade_runner.exceptions.ResourceNotFoundException;
 import course_work_isbd.blade_runner.repositories.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,36 +27,22 @@ public class BladeRunnerService {
     private final HumanRepository humanRepository;
     private final ReplicantRepository replicantRepository;
     private final PositionRepository positionRepository;
+    private final LocationRepository locationRepository;
+
 
     public List<ReplicantSearchResponse> getTasks() {
         List<ReplicantSearch> rs = replicantSearchRepository.findAll();
         List<ReplicantSearchResponse> tasks = new ArrayList<>();
         for (ReplicantSearch replicantSearch : rs) {
-            // получаем имя репликанта
             ReplicantSearchResponse task = new ReplicantSearchResponse();
+            // получаем id
             task.setTask_id(replicantSearch.getId());
-            Human human = humanRepository.findById(
-                    replicantSearch.getReplicant().getEntity_id().getId()).orElse(new Human());
-            task.setEntity_id(human.getId());
-            task.setReplicant(human.getFullName());
-            // получаем имя бегущего по лезвию
-            human = humanRepository.findById(
-                    replicantSearch.getBladeRunner().getHuman().getId()).orElse(new Human());
-            task.setBladeRunner(human.getFullName());
-
-            // получаем позицию бегущего по лезвию
-            BladeRunner bladeRunner = bladeRunnerRepository.
-                    findById(replicantSearch.getBladeRunner().getId()).orElse(new BladeRunner());
-            Position position = positionRepository.
-                    findById(bladeRunner.getPosition().getId()).orElse(new Position());
-            task.setBlade_runner_id(bladeRunner.getId());
-            task.setPosition(position.getName());
-            // получаем штаб бегущего по лезвию
-            BladeRunnersHQ bladeRunnersHQ = bladeRunnerHQRepository.
-                    findById(bladeRunner.getBladeRunnersHQ().getId()).orElse(new BladeRunnersHQ());
-            task.setBladeRunnerHQ(bladeRunnersHQ.getDescription());
+            // получаем репликанта
+            task.setReplicant(replicantSearch.getReplicant());
+            // получаем бегущего по лезвию
+            task.setBladeRunner(replicantSearch.getBladeRunner());
             // получаем статус задания
-            task.setStatus(replicantSearch.getResult());
+            task.setResult(replicantSearch.getResult());
 
             tasks.add(task);
         }
@@ -166,19 +155,18 @@ public class BladeRunnerService {
         List<BladeRunnerResponse> list = new ArrayList<>();
         for (BladeRunner bladeRunner : bladeRunners) {
             BladeRunnerResponse brr = new BladeRunnerResponse();
-
+            EntityResponse entity = convertHumanDto(bladeRunner.getHuman());
             Position position = positionRepository.
                     findById(bladeRunner.getPosition().getId()).orElse(new Position());
 
-            Human human = humanRepository.findById(bladeRunner.getHuman().getId()).orElse(new Human());
-
             brr.setBr_id(bladeRunner.getId());
+            brr.setEntity(entity);
             brr.setPosition(position.getName());
-            brr.setName(human.getFullName());
+            brr.setPos_description(position.getDescription());
+            brr.setHq(convertHQtoDTO(bladeRunner.getBladeRunnersHQ()));
             brr.setStatus(bladeRunner.getFree());
 
             list.add(brr);
-
         }
 
         return list;
@@ -196,6 +184,42 @@ public class BladeRunnerService {
         bladeRunner.setFree(true);
         bladeRunnerRepository.save(bladeRunner);
         return bladeRunner.getId();
+    }
+
+    private EntityResponse convertHumanDto(Human h) {
+        Long location_id = null;
+        String location = null;
+
+        if (h.getHumanLocation() == null)
+            location_id = null;
+        else
+            location_id = h.getHumanLocation().getId().longValue();
+        if (location_id != null) {
+            Location loc = locationRepository.findById(location_id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Error: Location is Not Found"));
+
+            StringBuilder stringBuilder = new StringBuilder();
+            location = stringBuilder.append("[").append(loc.getLatitude()).append(",").append(loc.getLongitude()).append("]").toString();
+        }
+        return new EntityResponse(
+                h.getId().longValue(),
+                h.getFullName(),
+                h.getBirthDate(),
+                h.getDeathDate(),
+                h.getIsHuman(),
+                location,
+                h.getSex()
+        );
+    }
+
+    private HQResponse convertHQtoDTO(BladeRunnersHQ hq) {
+        HQResponse hqResponse = new HQResponse();
+        StringBuilder stringBuilder = new StringBuilder();
+        String location = stringBuilder.append("[").append(hq.getLocation().getLatitude()).
+                append(",").append(hq.getLocation().getLongitude()).append("]").toString();
+        hqResponse.setLocation(location);
+        hqResponse.setDescription(hq.getDescription());
+        return hqResponse;
     }
 
 }

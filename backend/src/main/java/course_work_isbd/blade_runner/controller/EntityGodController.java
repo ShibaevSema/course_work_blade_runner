@@ -65,7 +65,6 @@ public class EntityGodController {
         return ResponseEntity.ok(entityService.getUnknownEntities());
     }
 
-
     @PostMapping("/post/relatives")
     public ResponseEntity<?> getEntityRelatives(@RequestBody IdRequest id) {
         return ResponseEntity.ok(entityService.getEntityRelatives(id.getId()));
