@@ -3,8 +3,8 @@
     <div class="flex flex-wrap">
       <div>
         <p-panel header="Профессия">
-          <h1>{{profession.name}}</h1>
-          <p>{{profession.description}}</p>
+          <h1>{{profession.name==null?"Безработный":profession.name}}</h1>
+          <p>{{profession.description==null?"Не имеет постоянной работы":profession.description}}</p>
         </p-panel>
       </div>
       <div style="margin-left: 2em; width: 30%">
