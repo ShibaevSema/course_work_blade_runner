@@ -38,13 +38,15 @@ public class BladeRunnerService {
             // получаем id
             task.setTask_id(replicantSearch.getId());
             // получаем репликанта
-            Human human = replicantSearch.getReplicant().getEntity_id();
-            task.setReplicant(convertHumanDtoToReplicant(human));
-            // получаем бегущего по лезвию
-            task.setBladeRunner(convertBladeRunnerToDTO(replicantSearch.getBladeRunner()));
-            // получаем статус задания
-            task.setResult(replicantSearch.getResult());
+            if (replicantSearch != null) {
+                Human human = replicantSearch.getReplicant().getEntity_id();
 
+                task.setReplicant(convertHumanDtoToReplicant(human));
+                // получаем бегущего по лезвию
+                task.setBladeRunner(convertBladeRunnerToDTO(replicantSearch.getBladeRunner()));
+                // получаем статус задания
+                task.setResult(replicantSearch.getResult());
+            }
             tasks.add(task);
         }
         return tasks;
