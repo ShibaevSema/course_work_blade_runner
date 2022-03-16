@@ -12,7 +12,7 @@ public class HumanizationAssessmentController {
     private final HumanizationService humanizationService;
 
     @PostMapping("/humanization")
-    public ResponseEntity<?> getReplicantRating(@RequestParam Long id) {
+    public ResponseEntity<?> getReplicantRating(@RequestBody Long id) {
         return ResponseEntity.ok(humanizationService.getReplicantRating(id));
     }
 

@@ -31,7 +31,7 @@ public class EntityGodController {
     }
 
     @PostMapping("/post/entity_prof")
-    public ResponseEntity<?> getEntityProfession(@RequestParam Long id) {
+    public ResponseEntity<?> getEntityProfession(@RequestBody Long id) {
         return ResponseEntity.ok(entityService.getEntityProfession(id));
     }
 
@@ -41,10 +41,9 @@ public class EntityGodController {
     }
 
     @PostMapping("/post/entity_actions")
-    public ResponseEntity<?> getEntityActions(@RequestParam Long id) {
+    public ResponseEntity<?> getEntityActions(@RequestBody Long id) {
         return ResponseEntity.ok(entityService.getAllActions(id));
     }
-
 
     @GetMapping("/get/all_entities")
     public ResponseEntity<?> getAllEntities() {
@@ -68,12 +67,12 @@ public class EntityGodController {
 
 
     @PostMapping("/post/relatives")
-    public ResponseEntity<?> getEntityRelatives(@RequestParam Long id) {
+    public ResponseEntity<?> getEntityRelatives(@RequestBody Long id) {
         return ResponseEntity.ok(entityService.getEntityRelatives(id));
     }
 
     @PostMapping("/post/vk_test")
-    public ResponseEntity<?> getEntityVKTest(@RequestParam Long id) {
+    public ResponseEntity<?> getEntityVKTest(@RequestBody Long id) {
         return ResponseEntity.ok(entityService.findEntityVKTest(id));
     }
 
