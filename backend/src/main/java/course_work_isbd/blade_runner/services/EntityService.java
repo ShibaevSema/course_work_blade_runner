@@ -88,17 +88,17 @@ public class EntityService {
     }
 
     public ProfessionResponse getEntityProfession(long id) {
-        Worker worker = workerRepository.findWorkerByHuman_Id(id).orElse(new Worker());
-        ProfessionResponse professionResponse = new ProfessionResponse();
-        if (worker.getId() != null) {
+        List<Worker> workers = workerRepository.findWorkerByHuman_Id(id);
+        List<ProfessionResponse> professionResponses = new ArrayList<>();
+        for (Worker worker : workers) {
+            ProfessionResponse professionResponse = new ProfessionResponse();
             Profession profession = professionRepository.findProfessionById(worker.getId()).orElse(new Profession());
-            professionResponse = new ProfessionResponse();
             professionResponse.setId(profession.getId());
             professionResponse.setName(profession.getName());
             professionResponse.setDescription(profession.getDescription());
-            return professionResponse;
+            professionResponses.add(professionResponse);
         }
-        return professionResponse;
+        return professionResponses.get(0);
     }
 
     public HashSet<EntityResponse> getEntityRelatives(long id) {
@@ -230,7 +230,7 @@ public class EntityService {
         Profession prof = professionRepository.findProfessionById(profession.getId())
                 .orElse(new Profession());
         Human human = humanRepository.findById(profession.getEntity_id()).orElse(new Human());
-        Worker worker = workerRepository.findWorkerByHuman_Id(human.getId()).orElse(new Worker());
+        Worker worker = new Worker();
         worker.setProfession(prof);
         worker.setHuman(human);
         workerRepository.save(worker);
