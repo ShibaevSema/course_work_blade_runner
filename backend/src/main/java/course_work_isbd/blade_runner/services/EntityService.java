@@ -77,9 +77,9 @@ public class EntityService {
         return convertHumanDto(people);
     }
 
-    public List<ReplicantResponse> getReplicants() {
+    public List<EntityResponse> getReplicants() {
         List<Human> replicants = humanRepository.findAllByIsHumanIsFalse();
-        return convertHumanDtoToReplicant(replicants);
+        return convertHumanDto(replicants);
     }
 
     public List<EntityResponse> getUnknownEntities() {
@@ -308,6 +308,7 @@ public class EntityService {
         }
         return list;
     }
+
 
 }
 
