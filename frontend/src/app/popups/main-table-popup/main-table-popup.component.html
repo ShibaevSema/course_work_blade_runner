@@ -9,8 +9,8 @@
       </div>
       <div style="margin-left: 2em; width: 30%">
         <p-panel header="Личная информация">
-          <b>Дата рождения: </b><p>{{humanoid.birthDate}}</p>
-          <b>Дата смерти:</b><p>{{humanoid.deathDate==null?"На данный момент жив":humanoid.deathDate}}</p>
+          <b>Дата рождения: </b><p>{{humanoid.birthDate==null?"Информации о дате рождения нет":humanoid.birthDate}}</p>
+          <b>Дата смерти:</b><p>{{humanoid.deathDate==null?"Информации о смерти нет":humanoid.deathDate}}</p>
           <b>Пол: </b><p>{{humanoid.sex?"Мужчина":"Женщина"}}</p>
           <b>Является репликантом: </b><p>{{humanoid.isHuman?"Нет":"Да"}}</p>
         </p-panel>
@@ -28,7 +28,7 @@
     <div *ngIf="descendants.length==0 || descendants==null">Информации о родственниках нет.</div>
     <p-accordion>
       <p-accordionTab *ngFor="let descendant of descendants" header="{{'['+descendant.entityId+']'+descendant.fullName}}">
-        <b>Дата рождения: </b><p>{{descendant.birthDate}}</p>
+        <b>Дата рождения: </b><p>{{descendant.birthDate==null?"Информации о дате рождения нет":humanoid.birthDate}}</p>
         <b>Дата смерти:</b><p>{{descendant.deathDate==null?"На данный момент жив":descendant.deathDate}}</p>
         <b>Пол: </b><p>{{descendant.sex?"Мужчина":"Женщина"}}</p>
         <b>Является репликантом: </b><p>{{descendant.isHuman?"Нет":"Да"}}</p>

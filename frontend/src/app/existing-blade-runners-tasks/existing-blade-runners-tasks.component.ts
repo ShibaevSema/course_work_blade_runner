@@ -64,7 +64,15 @@ export class ExistingBladeRunnersTasksComponent implements OnInit {
       message: 'Вы уверены что вы хотите удалить результат задания?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.bladeRunnerTasks.splice(this.bladeRunnerTasks.findIndex(t=>t===task).valueOf(),1);
+        this.bladeRunnerService.deleteBladeRunnerTask(task).subscribe({
+          next: result=>{
+            this.bladeRunnerTasks.splice(this.bladeRunnerTasks.findIndex(t=>t===task).valueOf(),1);
+            this.onSuccess("Задание удалено");
+          },
+          error: error=>{
+            this.onError(error.message);
+          }
+        })
       },
       reject: () => {
         //reject action

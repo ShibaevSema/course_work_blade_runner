@@ -32,11 +32,19 @@ export class BladeRunnersService {
     return this.http.post("api/blade_runners/register/task", {entity_id: humanoid.entityId, blade_runner_id: bladeRunner.br_id});
   }
 
-  public deleteBladeRunnerTask(bladeRunner: BladeRunner, humanoid: Humanoid): Observable<any>{
-    return this.http.post("api/blade_runners/register/task", {entity_id: humanoid.entityId, blade_runner_id: bladeRunner.br_id});
+  public deleteBladeRunnerTask(task: BladeRunnerTask): Observable<any>{
+    return this.http.delete("api/blade_runners/delete/task", {
+      body: undefined,
+      context: undefined,
+      headers: undefined,
+      observe: "body",
+      params: {id: task.task_id},
+      reportProgress: false,
+      responseType: "arraybuffer",
+      withCredentials: false});
   }
 
   public updateBladeRunnerTask(task: BladeRunnerTask): Observable<any>{
-    return this.http.put("api/blade_runners/update/task", {id: task.task_id,entity_id: task.replicant.entityId, blade_runner_id: task.bladeRunner.br_id, result: task.result});
+    return this.http.put("api/blade_runners/delete/task", {id: task.task_id,entity_id: task.replicant.entityId, blade_runner_id: task.bladeRunner.br_id, result: task.result});
   }
 }
