@@ -5,8 +5,15 @@
                   icon="pi pi-user-plus"></button>
         </span>
   </ng-template>
-  <p-table [value]="selectedCut" selectionMode="single" [(selection)]="selectedHumanoid"
-           (onRowSelect)="onRowSelect($event)" responsiveLayout="scroll">
+  <p-table #humanoidTable [value]="selectedCut" selectionMode="single" [(selection)]="selectedHumanoid"
+           (onRowSelect)="onRowSelect($event)" responsiveLayout="scroll" [globalFilterFields]="['entityId', 'fullName']">
+    <ng-template pTemplate="caption">
+      <span class="p-input-icon-right ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="humanoidTable.filterGlobal($event.target.value, 'contains')"
+                           placeholder="Поиск по таблице"/>
+      </span>
+    </ng-template>
     <ng-template pTemplate="header">
       <tr>
         <th *ngFor="let col of cols">

@@ -5,6 +5,7 @@ import {MessageService} from 'primeng/api';
 import {DialogService} from 'primeng/dynamicdialog';
 import {SelectReplicantPopupComponent} from '../popups/select-replicant-popup/select-replicant-popup.component';
 import {SelectBladeRunnerPopupComponent} from '../popups/select-blade-runner-popup/select-blade-runner-popup.component';
+import {BladeRunnersService} from "../services/blade-runners.service";
 
 @Component({
   selector: 'app-new-blade-runner-task',
@@ -21,7 +22,8 @@ export class NewBladeRunnerTaskComponent implements OnInit {
 
 
   constructor(public messageService: MessageService,
-              public dialogService: DialogService) {
+              public dialogService: DialogService,
+              public bladeRunnerService: BladeRunnersService) {
   }
 
   ngOnInit(): void {
@@ -48,7 +50,7 @@ export class NewBladeRunnerTaskComponent implements OnInit {
     ref.onClose.subscribe((bladeRunner: BladeRunner) => {
       if (bladeRunner) {
         this.bladeRunner = bladeRunner;
-        this.bladeRunnerName = '[' + bladeRunner.humanoid.entityId + '] ' + bladeRunner.humanoid.fullName;
+        this.bladeRunnerName = '[' + bladeRunner.br_id + '] ' + bladeRunner.entity.fullName;
       }
     });
   }
@@ -57,7 +59,10 @@ export class NewBladeRunnerTaskComponent implements OnInit {
     if (this.replicantName == undefined || this.bladeRunnerName == undefined) {
       this.onError('Вы не выбрали репликанта или бегущего по лезвию');
     } else {
-      this.onSuccess('Задание добавлено');
+      this.bladeRunnerService.setBladeRunnerTask(this.bladeRunner, this.replicant).subscribe({
+        next: result=> {this.onSuccess("Задание создано!")},
+        error: error=>{this.onError(error.message)}
+      })
       this.bladeRunnerName = undefined;
       this.replicantName = undefined;
     }

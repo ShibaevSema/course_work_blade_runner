@@ -75,5 +75,4 @@ public class EntityGodController {
         return ResponseEntity.ok(entityService.findEntityVKTest(id.getId()));
     }
 
-
 }

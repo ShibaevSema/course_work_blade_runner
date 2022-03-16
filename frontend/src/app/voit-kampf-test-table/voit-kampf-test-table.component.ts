@@ -31,7 +31,7 @@ export class VoitKampfTestTableComponent implements OnInit {
       {field: 'eyeMovement', header: 'Движение глаз'},
       {field: 'result', header: 'Результат'}
     ];
-    this.voitKampfTests = this.voitKampfTestsService.getAllVoitKampfTests();
+    this.voitKampfTestsService.getAllVoitKampfTests().subscribe((tests)=>this.voitKampfTests.push(tests));
   }
 
   onRowSelect($event: any) {

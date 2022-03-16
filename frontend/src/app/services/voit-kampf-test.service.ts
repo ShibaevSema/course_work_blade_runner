@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {VoitKampfTestResult} from '../samples/voit-kampf-test-result';
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -7,29 +9,15 @@ import {VoitKampfTestResult} from '../samples/voit-kampf-test-result';
 export class VoitKampfTestService {
   voitCampfTests: VoitKampfTestResult[];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getAllVoitKampfTests(): VoitKampfTestResult[]{
+  getAllVoitKampfTests(): Observable<any>{
     //TODO: запросом доставать все пройденные тесты
-    this.voitCampfTests = [{
-      id: 1, brainReaction: true, eyeMovement: false, result: false, completionDate: '09.02.2022'
-    },{
-      id: 2, brainReaction: true, eyeMovement: true, result: true, completionDate: '07.02.2022'
-    },{
-      id: 3, brainReaction: false, eyeMovement: true, result: false, completionDate: '08.02.2022'
-    }];
-    return this.voitCampfTests;
+    return this.http.get("api/main/get/vk_tests");
   }
 
-  getVoitKampfTests(id: number): VoitKampfTestResult[]{
+  getVoitKampfTests(entityId: number): Observable<any>{
     //TODO: Запросом достать все пройденные тесты репликантом по индексу id
-    this.voitCampfTests = [{
-      id: 1, brainReaction: true, eyeMovement: false, result: false, completionDate: '09.02.2022'
-    },{
-      id: 2, brainReaction: true, eyeMovement: true, result: true, completionDate: '07.02.2022'
-    },{
-      id: 3, brainReaction: false, eyeMovement: true, result: false, completionDate: '08.02.2022'
-    }];
-    return this.voitCampfTests;
+    return this.http.post("api/main/post/vk_test", {id: entityId});
   }
 }

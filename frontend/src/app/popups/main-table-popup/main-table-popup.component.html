@@ -25,8 +25,9 @@
     </div>
   </p-tabPanel>
   <p-tabPanel header="Родственники">
+    <div *ngIf="descendants.length==0 || descendants==null">Информации о родственниках нет.</div>
     <p-accordion>
-      <p-accordionTab *ngFor="let descendant of descendants" header="{{descendant.fullName}}">
+      <p-accordionTab *ngFor="let descendant of descendants" header="{{'['+descendant.entityId+']'+descendant.fullName}}">
         <b>Дата рождения: </b><p>{{descendant.birthDate}}</p>
         <b>Дата смерти:</b><p>{{descendant.deathDate==null?"На данный момент жив":descendant.deathDate}}</p>
         <b>Пол: </b><p>{{descendant.sex?"Мужчина":"Женщина"}}</p>
@@ -35,6 +36,7 @@
     </p-accordion>
   </p-tabPanel>
   <p-tabPanel header="Тесты Войта-Кампфа">
+    <div *ngIf="voitKampfTests.length==0|| voitKampfTests == null">Пройденных тестов нет</div>
     <p-accordion>
       <p-accordionTab *ngFor="let test of voitKampfTests" header="Тест под номером {{test.id}}">
         <b>Дата выполнения: </b><p>{{test.completionDate}}</p>

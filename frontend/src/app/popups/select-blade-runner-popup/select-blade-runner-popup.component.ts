@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {BladeRunner} from '../../samples/blade-runner';
-import {HumanoidService} from '../../services/humanoid.service';
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
 import {BladeRunnersService} from '../../services/blade-runners.service';
 
@@ -16,7 +15,7 @@ export class SelectBladeRunnerPopupComponent implements OnInit {
   constructor(public bladeRunnersService: BladeRunnersService, public ref: DynamicDialogRef) { }
 
   ngOnInit(): void {
-    this.allBladeRunners=this.bladeRunnersService.getExistingBladeRunners();
+    this.bladeRunnersService.getExistingBladeRunners().subscribe((bladerunners)=>this.allBladeRunners=bladerunners);
   }
 
   onRowSelect($event: any) {

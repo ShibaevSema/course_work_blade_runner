@@ -1,7 +1,8 @@
 export interface VoitKampfTestResult {
   id,
+  entity_id,
   eyeMovement,
   brainReaction,
-  completionDate,
+  localDate,
   result
 }

@@ -2,10 +2,10 @@ import {Hq} from './hq';
 import {Humanoid} from './humanoid';
 
 export interface BladeRunner {
-  id: number,
-  humanoid: Humanoid,
+  br_id: number,
+  entity: Humanoid,
   hq: Hq,
   position: string,
   position_description: string,
-  available: boolean
+  status: boolean
 }

@@ -1,7 +1,7 @@
 <p-panel header="Все бегущие по лезвию">
   <p-table #replicantTable [value]="allBladeRunners" selectionMode="single" [(selection)]="selectedBladeRunner"
            (onRowSelect)="onRowSelect($event)" responsiveLayout="scroll"
-           [globalFilterFields]="['id','humanoid.fullName','position','hq.location']">
+           [globalFilterFields]="['br_id','entity.fullName','position','hq.location']">
     <ng-template pTemplate="caption">
       <span class="p-input-icon-right ml-auto">
                     <i class="pi pi-search"></i>
@@ -13,11 +13,11 @@
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="id">Id
-          <p-sortIcon field="id"></p-sortIcon>
+        <th pSortableColumn="br_id">Id
+          <p-sortIcon field="br_id"></p-sortIcon>
         </th>
-        <th pSortableColumn="humanoid.fullName">Полное имя
-          <p-sortIcon field="humanoid.fullName"></p-sortIcon>
+        <th pSortableColumn="entity.fullName">Полное имя
+          <p-sortIcon field="entity.fullName"></p-sortIcon>
         </th>
         <th pSortableColumn="position">Должность
           <p-sortIcon field="position"></p-sortIcon>
@@ -32,8 +32,8 @@
     </ng-template>
     <ng-template pTemplate="body" let-bladeRunner>
       <tr [pSelectableRow]="bladeRunner">
-        <td>{{bladeRunner.id}}</td>
-        <td>{{bladeRunner.humanoid.fullName}}</td>
+        <td>{{bladeRunner.br_id}}</td>
+        <td>{{bladeRunner.entity.fullName}}</td>
         <td>{{bladeRunner.position}}</td>
         <td>{{bladeRunner.hq.description}}</td>
         <td>{{bladeRunner.hq.location}}</td>
