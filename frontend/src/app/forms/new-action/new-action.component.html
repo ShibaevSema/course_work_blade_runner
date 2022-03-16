@@ -1,0 +1,20 @@
+<p-accordionTab header="Действие номер {{id}}">
+    <ng-template pTemplate="content">
+        <div>
+            <p-dropdown [options]="existingActions" [(ngModel)]="selectedAction"></p-dropdown>
+        </div>
+        <div>
+            <input pInputText type="text" [(ngModel)]="selectedAction.name" placeholder="Название">
+        </div>
+        <div>
+            <textarea pInputTextarea [(ngModel)]="selectedAction.description" placeholder="Описание"></textarea>
+        </div>
+        <div>
+            <p>Влияние действия</p>
+            <p-checkbox [(ngModel)]="selectedAction.benefit_of_harm" [binary]="true" inputId="benefitofharm"></p-checkbox>
+            <label style="margin-left: 1.2em"
+                   for="benefitofharm">{{selectedAction.benefit_of_harm ? "Положительное" : "Отрицательное"}}</label>
+        </div>
+    </ng-template>
+</p-accordionTab>
+

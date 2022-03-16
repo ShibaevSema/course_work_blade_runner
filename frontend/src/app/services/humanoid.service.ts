@@ -27,4 +27,8 @@ export class HumanoidService {
     //TODO: запросом доставать модель реплеканта по id гуманойда
     return {id: 1, corporationName: "Штаб бегущих по лезвию в жопе мира", description: "Любит долбить себя в очелло", name: "Nexus-9"}
   }
+
+  getAllActions(): Observable<any>{
+    return this.http.get("api/main/get/all_actions");
+  }
 }
