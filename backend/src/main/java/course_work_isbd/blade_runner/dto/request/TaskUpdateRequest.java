@@ -8,5 +8,4 @@ public class TaskUpdateRequest {
     private Long entity_id;
     private Long blade_runner_id;
     private Boolean result;
-
 }

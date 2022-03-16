@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class HumanizationAssessmentController {
     private final HumanizationService humanizationService;
 
-    @GetMapping("/get")
+    @PostMapping("/humanization")
     public ResponseEntity<?> getReplicantRating(@RequestParam Long id) {
         return ResponseEntity.ok(humanizationService.getReplicantRating(id));
     }

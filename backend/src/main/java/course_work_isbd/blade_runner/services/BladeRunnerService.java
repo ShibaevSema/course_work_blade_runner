@@ -1,7 +1,9 @@
 package course_work_isbd.blade_runner.services;
 
+import course_work_isbd.blade_runner.dto.request.BladeRunnerRequest;
 import course_work_isbd.blade_runner.dto.request.ReplicantSearchRequest;
 import course_work_isbd.blade_runner.dto.request.TaskUpdateRequest;
+import course_work_isbd.blade_runner.dto.responses.BladeRunnerResponse;
 import course_work_isbd.blade_runner.dto.responses.ReplicantSearchResponse;
 import course_work_isbd.blade_runner.entities.*;
 import course_work_isbd.blade_runner.repositories.*;
@@ -29,7 +31,7 @@ public class BladeRunnerService {
         for (ReplicantSearch replicantSearch : rs) {
             // получаем имя репликанта
             ReplicantSearchResponse task = new ReplicantSearchResponse();
-
+            task.setTask_id(replicantSearch.getId());
             Human human = humanRepository.findById(
                     replicantSearch.getReplicant().getEntity_id().getId()).orElse(new Human());
             task.setEntity_id(human.getId());
@@ -38,11 +40,13 @@ public class BladeRunnerService {
             human = humanRepository.findById(
                     replicantSearch.getBladeRunner().getHuman().getId()).orElse(new Human());
             task.setBladeRunner(human.getFullName());
+
             // получаем позицию бегущего по лезвию
             BladeRunner bladeRunner = bladeRunnerRepository.
                     findById(replicantSearch.getBladeRunner().getId()).orElse(new BladeRunner());
             Position position = positionRepository.
                     findById(bladeRunner.getPosition().getId()).orElse(new Position());
+            task.setBlade_runner_id(bladeRunner.getId());
             task.setPosition(position.getName());
             // получаем штаб бегущего по лезвию
             BladeRunnersHQ bladeRunnersHQ = bladeRunnerHQRepository.
@@ -82,14 +86,8 @@ public class BladeRunnerService {
     }
 
 
-    public long deleteTask(TaskUpdateRequest task) {
-        ReplicantSearch replicantSearch = new ReplicantSearch();
-        Replicant replicant = replicantRepository.findByEntity_id(task.getEntity_id());
-        BladeRunner bladeRunner = bladeRunnerRepository.findById(task.getBlade_runner_id()).orElse(new BladeRunner());
-        replicantSearch.setId(task.getId());
-        replicantSearch.setReplicant(replicant);
-        replicantSearch.setBladeRunner(bladeRunner);
-        replicantSearch.setResult(task.getResult());
+    public long deleteTask(Long id) {
+        ReplicantSearch replicantSearch = replicantSearchRepository.findById(id).orElse(new ReplicantSearch());
         replicantSearchRepository.delete(replicantSearch);
 
         return replicantSearch.getId();
@@ -161,6 +159,42 @@ public class BladeRunnerService {
             }
         }
         return 0;
+    }
+
+    public List<BladeRunnerResponse> getAllBR() {
+        List<BladeRunner> bladeRunners = bladeRunnerRepository.findAll();
+        List<BladeRunnerResponse> list = new ArrayList<>();
+        for (BladeRunner bladeRunner : bladeRunners) {
+            BladeRunnerResponse brr = new BladeRunnerResponse();
+
+            Position position = positionRepository.
+                    findById(bladeRunner.getPosition().getId()).orElse(new Position());
+
+            Human human = humanRepository.findById(bladeRunner.getHuman().getId()).orElse(new Human());
+
+            brr.setBr_id(bladeRunner.getId());
+            brr.setPosition(position.getName());
+            brr.setName(human.getFullName());
+            brr.setStatus(bladeRunner.getFree());
+
+            list.add(brr);
+
+        }
+
+    return list;
+    }
+
+
+    public Long saveBladeRunner(BladeRunnerRequest br) {
+        BladeRunner bladeRunner = new BladeRunner();
+        Human human = humanRepository.findById(br.getEntity_id()).orElse(new Human());
+        bladeRunner.setHuman(human);
+        BladeRunnersHQ bladeRunnersHQ = bladeRunnerHQRepository.findById(br.getHq_id()).orElse(new BladeRunnersHQ());
+        bladeRunner.setBladeRunnersHQ(bladeRunnersHQ);
+        Position position = positionRepository.findById(br.getPosition_id()).orElse(new Position());
+        bladeRunner.setPosition(position);
+        bladeRunnerRepository.save(bladeRunner);
+        return bladeRunner.getId();
     }
 
 }

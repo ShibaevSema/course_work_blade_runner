@@ -30,17 +30,17 @@ public class EntityGodController {
         return ResponseEntity.ok(entityService.addProfession(profession));
     }
 
-    @GetMapping("/get/entity_prof")
+    @PostMapping("/post/entity_prof")
     public ResponseEntity<?> getEntityProfession(@RequestParam Long id) {
         return ResponseEntity.ok(entityService.getEntityProfession(id));
     }
 
-    @PostMapping("/add/action")
+    @PostMapping("/post/action")
     public ResponseEntity<?> saveAction(@RequestBody ActionRequest action) {
         return ResponseEntity.ok(entityService.addAction(action));
     }
 
-    @GetMapping("/get/entity_actions")
+    @PostMapping("/post/entity_actions")
     public ResponseEntity<?> getEntityActions(@RequestParam Long id) {
         return ResponseEntity.ok(entityService.getAllActions(id));
     }
@@ -67,12 +67,12 @@ public class EntityGodController {
     }
 
 
-    @GetMapping("/get/relatives")
+    @PostMapping("/post/relatives")
     public ResponseEntity<?> getEntityRelatives(@RequestParam Long id) {
         return ResponseEntity.ok(entityService.getEntityRelatives(id));
     }
 
-    @GetMapping("/get/vk_test")
+    @PostMapping("/post/vk_test")
     public ResponseEntity<?> getEntityVKTest(@RequestParam Long id) {
         return ResponseEntity.ok(entityService.findEntityVKTest(id));
     }

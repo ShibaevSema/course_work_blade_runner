@@ -1,5 +1,6 @@
 package course_work_isbd.blade_runner.controller;
 
+import course_work_isbd.blade_runner.dto.request.BladeRunnerRequest;
 import course_work_isbd.blade_runner.dto.request.ReplicantSearchRequest;
 import course_work_isbd.blade_runner.dto.request.TaskUpdateRequest;
 import course_work_isbd.blade_runner.services.BladeRunnerService;
@@ -29,8 +30,18 @@ public class TasksController {
     }
 
     @DeleteMapping("/delete/task")
-    public ResponseEntity<?> deleteTasks(@RequestBody TaskUpdateRequest task) {
-        return ResponseEntity.ok(bladeRunnerService.deleteTask(task));
+    public ResponseEntity<?> deleteTasks(@RequestParam Long id) {
+        return ResponseEntity.ok(bladeRunnerService.deleteTask(id));
+    }
+
+    @GetMapping("/get/blade_runners")
+    public ResponseEntity<?> getAllBR() {
+        return ResponseEntity.ok(bladeRunnerService.getAllBR());
+    }
+
+    @PostMapping("/register/blade_runner")
+    public ResponseEntity<?> saveBladeRunner(@RequestBody BladeRunnerRequest br) {
+        return ResponseEntity.ok(bladeRunnerService.saveBladeRunner(br));
     }
 
 

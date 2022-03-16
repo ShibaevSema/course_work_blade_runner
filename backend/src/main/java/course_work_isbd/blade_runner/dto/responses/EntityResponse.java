@@ -34,7 +34,7 @@ public class EntityResponse {
     private LocalDate birthDate;
     private LocalDate deathDate;
     private Boolean isHuman;
-    private Long idLocation;
+    private String location;
     private Boolean sex;
 
 }

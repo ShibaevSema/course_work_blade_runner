@@ -168,19 +168,28 @@ public class EntityService {
 
     private List<EntityResponse> convertHumanDto(List<Human> list) {
         List<EntityResponse> entityResponsesList = new ArrayList<>();
-        Long location_id;
+        Long location_id = null;
+        String location = null;
+
         for (Human h : list) {
             if (h.getHumanLocation() == null)
                 location_id = null;
             else
                 location_id = h.getHumanLocation().getId().longValue();
+            if (location_id != null) {
+                Location loc = locationRepository.findById(location_id)
+                        .orElseThrow(() -> new ResourceNotFoundException("Error: Location is Not Found"));
+
+                StringBuilder stringBuilder = new StringBuilder();
+                location = stringBuilder.append("[").append(loc.getLatitude()).append(",").append(loc.getLongitude()).append("]").toString();
+            }
             entityResponsesList.add(new EntityResponse(
                     h.getId().longValue(),
                     h.getFullName(),
                     h.getBirthDate(),
                     h.getDeathDate(),
                     h.getIsHuman(),
-                    location_id,
+                    location,
                     h.getSex()
             ));
         }
