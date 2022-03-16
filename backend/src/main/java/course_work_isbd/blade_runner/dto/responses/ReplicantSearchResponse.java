@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class ReplicantSearchResponse {
     private Long task_id;
-    private BladeRunner bladeRunner;
-    private Replicant replicant;
+    private BladeRunnerResponse bladeRunner;
+    private ReplicantResponse replicant;
     private Boolean result;
 }
