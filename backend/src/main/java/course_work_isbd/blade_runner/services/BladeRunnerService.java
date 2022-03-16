@@ -181,7 +181,7 @@ public class BladeRunnerService {
 
         }
 
-    return list;
+        return list;
     }
 
 
@@ -193,6 +193,7 @@ public class BladeRunnerService {
         bladeRunner.setBladeRunnersHQ(bladeRunnersHQ);
         Position position = positionRepository.findById(br.getPosition_id()).orElse(new Position());
         bladeRunner.setPosition(position);
+        bladeRunner.setFree(true);
         bladeRunnerRepository.save(bladeRunner);
         return bladeRunner.getId();
     }
