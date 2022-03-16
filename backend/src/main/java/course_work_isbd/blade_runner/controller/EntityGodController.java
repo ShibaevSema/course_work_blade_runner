@@ -75,4 +75,9 @@ public class EntityGodController {
         return ResponseEntity.ok(entityService.findEntityVKTest(id.getId()));
     }
 
+    @GetMapping("/get/all_actions")
+    public ResponseEntity<?> getAllActions() {
+        return ResponseEntity.ok(entityService.getAbsolutelyAllActions());
+    }
+
 }

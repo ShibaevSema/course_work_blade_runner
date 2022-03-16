@@ -295,6 +295,19 @@ public class EntityService {
         );
     }
 
+    public List<ActionAbsResponse> getAbsolutelyAllActions() {
+        List<Action> actions = actionRepository.findAll();
+        List<ActionAbsResponse> list = new ArrayList<>();
+        for (Action action : actions) {
+            ActionAbsResponse actionAbsResponse = new ActionAbsResponse();
+            actionAbsResponse.setId(action.getId());
+            actionAbsResponse.setName(action.getName());
+            actionAbsResponse.setDescription(action.getDescription());
+            actionAbsResponse.setBenefit_or_harm(action.getBenefitOrHarm());
+            list.add(actionAbsResponse);
+        }
+        return list;
+    }
 
 }
 
