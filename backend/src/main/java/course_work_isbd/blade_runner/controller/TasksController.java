@@ -34,15 +34,14 @@ public class TasksController {
         return ResponseEntity.ok(bladeRunnerService.deleteTask(id));
     }
 
-    @GetMapping("/get/blade_runners")
+    @GetMapping("/get")
     public ResponseEntity<?> getAllBR() {
         return ResponseEntity.ok(bladeRunnerService.getAllBR());
     }
 
-    @PostMapping("/register/blade_runner")
+    @PostMapping("/register")
     public ResponseEntity<?> saveBladeRunner(@RequestBody BladeRunnerRequest br) {
         return ResponseEntity.ok(bladeRunnerService.saveBladeRunner(br));
     }
-
 
 }
