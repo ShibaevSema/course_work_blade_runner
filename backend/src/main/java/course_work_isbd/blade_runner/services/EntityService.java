@@ -92,15 +92,16 @@ public class EntityService {
 
     public ProfessionResponse getEntityProfession(long id) {
         Worker worker = workerRepository.findWorkerByHuman_Id(id).orElse(new Worker());
+        ProfessionResponse professionResponse = new ProfessionResponse();
         if (worker.getId() != null) {
             Profession profession = professionRepository.findProfessionById(worker.getId()).orElse(new Profession());
-            ProfessionResponse professionResponse = new ProfessionResponse();
+            professionResponse = new ProfessionResponse();
             professionResponse.setId(profession.getId());
             professionResponse.setName(profession.getName());
             professionResponse.setDescription(profession.getDescription());
             return professionResponse;
         }
-        return null;
+        return professionResponse;
     }
 
     public List<DescendantResponse> getEntityRelatives(long id) {
