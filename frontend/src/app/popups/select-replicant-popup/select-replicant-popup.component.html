@@ -35,10 +35,10 @@
       <tr [pSelectableRow]="replicant">
         <td>{{replicant.id}}</td>
         <td>{{replicant.fullName}}</td>
-        <td>{{replicant.sex}}</td>
-        <td>{{replicant.birthDate}}</td>
-        <td>{{replicant.deathDate}}</td>
-        <td>{{replicant.location}}</td>
+        <td>{{replicant.sex?"Мужчина":"Женщина"}}</td>
+        <td>{{replicant.birthDate==null?"Неизвестно":replicant.birthDate}}</td>
+        <td>{{replicant.deathDate==null?"Неизвестно":replicant.deathDate}}</td>
+        <td>{{replicant.location==null?"Неизвестно":replicant.location}}</td>
       </tr>
     </ng-template>
   </p-table>
