@@ -20,29 +20,6 @@ CREATE TRIGGER TRIGGER_correct_date_of_birth
 UPDATE ON ENTITY
     FOR EACH ROW EXECUTE PROCEDURE correct_date_of_birth();
 
--- В таблице Replicants может быть только Entity, у которого is_human = false
-CREATE
-OR REPLACE FUNCTION replicant_not_human() returns trigger as
-$$
-DECLARE
-res bool := false;
-BEGIN
-    IF
-res = (select is_human from entity where entity.id = new.entity_id) THEN
-        RAISE EXCEPTION 'replicant cant be a human ';
-ELSE
-        RETURN NEW;
-END IF;
-END
-$$
-LANGUAGE plpgsql;
-CREATE TRIGGER TRIGGER_replicant_not_human
-    BEFORE INSERT OR
-UPDATE
-    ON replicant
-    FOR EACH ROW
-    EXECUTE PROCEDURE replicant_not_human();
-
 -- Нужно вести статистику по новым репликантам -
 
 create function find_replicants() returns trigger

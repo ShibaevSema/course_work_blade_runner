@@ -16,7 +16,7 @@
     <ng-template pTemplate="body" let-humanoid>
       <tr [pSelectableRow]="humanoid">
         <td *ngFor="let col of cols">
-          {{humanoid[col.field]}}
+          {{humanoid[col.field]==null?"Неизвестно":humanoid[col.field]==humanoid["sex"]?humanoid[col.field]?"Мужчина":"Женщина":humanoid[col.field]}}
         </td>
       </tr>
     </ng-template>

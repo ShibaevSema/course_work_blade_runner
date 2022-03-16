@@ -35,7 +35,7 @@ export class NewBladeRunnerTaskComponent implements OnInit {
     ref.onClose.subscribe((replicant: Humanoid) => {
       if (replicant) {
         this.replicant = replicant;
-        this.replicantName = '[' + replicant.id + '] ' + replicant.fullName;
+        this.replicantName = '[' + replicant.entityId + '] ' + replicant.fullName;
       }
     });
   }
@@ -48,7 +48,7 @@ export class NewBladeRunnerTaskComponent implements OnInit {
     ref.onClose.subscribe((bladeRunner: BladeRunner) => {
       if (bladeRunner) {
         this.bladeRunner = bladeRunner;
-        this.bladeRunnerName = '[' + bladeRunner.humanoid.id + '] ' + bladeRunner.humanoid.fullName;
+        this.bladeRunnerName = '[' + bladeRunner.humanoid.entityId + '] ' + bladeRunner.humanoid.fullName;
       }
     });
   }

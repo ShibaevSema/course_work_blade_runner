@@ -30,11 +30,11 @@ export class MainTablePopupComponent implements OnInit {
     this.id = this.config.data.humanoid.id;
     this.humanoid = this.config.data.humanoid;
     if(!this.humanoid.isHuman){
-      this.replicantModel = this.humanodService.getReplicantModel(this.humanoid.id);
+      this.replicantModel = this.humanodService.getReplicantModel(this.humanoid.entityId);
     }
     this.profession = this.professionService.getProfession(this.config.data.humanoid.id);
     this.descendants = this.humanodService.getDescendants();
-    this.voitKampfTests = this.voitKampfTestService.getVoitKampfTests(this.humanoid.id);
+    this.voitKampfTests = this.voitKampfTestService.getVoitKampfTests(this.humanoid.entityId);
   }
 
 

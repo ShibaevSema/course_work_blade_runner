@@ -16,8 +16,8 @@ export class MainTableComponent implements OnInit {
 
   @Input("headerValue") headerValue: string;
 
-  selectedCut: Humanoid[];
-  allHumanoids: Humanoid[];
+  selectedCut: Humanoid[]=[];
+  allHumanoids: Humanoid[] = [];
   cols: any[];
   selectedHumanoid: Humanoid;
 
@@ -28,8 +28,6 @@ export class MainTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
     this.cols = [
       { field: 'fullName', header: 'Полное имя' },
       { field: 'sex', header: 'Пол' },
@@ -37,9 +35,10 @@ export class MainTableComponent implements OnInit {
       { field: 'deathDate', header: 'Дата смерти' },
       { field: 'location', header: 'Местоположение' }
     ];
-    this.allHumanoids=this.humanoidService.getAllHumanoids();
-    this.onSelectCutChange();
-
+    this.humanoidService.getAllHumanoids().subscribe((data: Humanoid[])=>{
+      data.forEach((humanoid)=> this.allHumanoids.push(humanoid));
+      this.onSelectCutChange();
+    });
   }
 
   onRowSelect(event) {
@@ -47,7 +46,7 @@ export class MainTableComponent implements OnInit {
       data: {
         humanoid: this.selectedHumanoid
       },
-      header: "[id:"+this.selectedHumanoid.id+"] "+this.selectedHumanoid.fullName,
+      header: "[id:"+this.selectedHumanoid.entityId+"] "+this.selectedHumanoid.fullName,
       width: '80%',
       dismissableMask: true,
       contentStyle: {"max-height": "800px", "overflow": "auto"},

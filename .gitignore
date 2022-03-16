@@ -1,6 +1,7 @@
 backend/HELP.md
 .gradle
 build/
+backend/src/main/resources/application.properties
 !backend/gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
