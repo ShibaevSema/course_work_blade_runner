@@ -1,5 +1,6 @@
 package course_work_isbd.blade_runner.controller;
 
+import course_work_isbd.blade_runner.dto.request.IdRequest;
 import course_work_isbd.blade_runner.services.HumanizationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +13,8 @@ public class HumanizationAssessmentController {
     private final HumanizationService humanizationService;
 
     @PostMapping("/humanization")
-    public ResponseEntity<?> getReplicantRating(@RequestBody Long id) {
-        return ResponseEntity.ok(humanizationService.getReplicantRating(id));
+    public ResponseEntity<?> getReplicantRating(@RequestBody IdRequest id) {
+        return ResponseEntity.ok(humanizationService.getReplicantRating(id.getId()));
     }
 
 }
