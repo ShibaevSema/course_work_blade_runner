@@ -16,7 +16,11 @@ export class SelectReplicantPopupComponent implements OnInit {
   constructor(public humanoidService: HumanoidService, public ref: DynamicDialogRef) { }
 
   ngOnInit(): void {
-    this.allReplicants=this.humanoidService.getAllHumanoids().filter((humanoid)=>!humanoid.isHuman);
+    this.humanoidService.getAllHumanoids().subscribe((data: Humanoid[])=>{
+      this.allReplicants=data;
+    });
+    this.allReplicants = this.allReplicants.filter((humanoid)=>!humanoid.isHuman);
+
   }
 
   selectReplicant(){

@@ -1,5 +1,5 @@
 export interface Humanoid {
-  id,
+  entityId,
   fullName,
   birthDate,
   deathDate,

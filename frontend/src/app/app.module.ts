@@ -6,7 +6,7 @@ import {PanelModule} from 'primeng/panel';
 import {InputTextModule} from 'primeng/inputtext';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 import {AppRoutingModule} from './app-routing.module';
-import {HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import { EntryPointComponent } from './entry-point/entry-point.component';
 import {FormsModule} from '@angular/forms';
 import { LoginComponent } from './login/login.component';
@@ -87,7 +87,8 @@ import {DropdownModule} from 'primeng/dropdown';
     AccordionModule,
     CardModule,
     TooltipModule,
-    ConfirmPopupModule
+    ConfirmPopupModule,
+    HttpClientModule
   ],
   providers: [
     HttpClient,
