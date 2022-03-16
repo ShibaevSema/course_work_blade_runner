@@ -103,12 +103,15 @@ public class EntityService {
 
     public HashSet<EntityResponse> getEntityRelatives(long id) {
         HashSet<EntityResponse> relatives = new HashSet<>();
+        Human human = humanRepository.findById(id).orElse(new Human());
         List<Descendant> fathers = descendantRepository.findAllByFather_Id(id);
         List<Descendant> mothers = descendantRepository.findAllByMother_Id(id);
         List<Descendant> child = descendantRepository.findAllByChild_Id(id);
         relatives.addAll(findAllRelatives(fathers));
         relatives.addAll(findAllRelatives(mothers));
         relatives.addAll(findAllRelatives(child));
+        relatives.remove(convertHumanDto(human));
+
         return relatives;
     }
 
@@ -263,6 +266,33 @@ public class EntityService {
             actions.add(actionResponse);
         }
         return actions;
+    }
+
+
+    private EntityResponse convertHumanDto(Human h) {
+        Long location_id = null;
+        String location = null;
+
+        if (h.getHumanLocation() == null)
+            location_id = null;
+        else
+            location_id = h.getHumanLocation().getId().longValue();
+        if (location_id != null) {
+            Location loc = locationRepository.findById(location_id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Error: Location is Not Found"));
+
+            StringBuilder stringBuilder = new StringBuilder();
+            location = stringBuilder.append("[").append(loc.getLatitude()).append(",").append(loc.getLongitude()).append("]").toString();
+        }
+        return new EntityResponse(
+                h.getId().longValue(),
+                h.getFullName(),
+                h.getBirthDate(),
+                h.getDeathDate(),
+                h.getIsHuman(),
+                location,
+                h.getSex()
+        );
     }
 
 
